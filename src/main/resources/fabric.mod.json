@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "ziplines",
+  "version": "${version}",
+
+  "name": "Ziplines",
+  "description": "Different kinds of ziplines for a different kind of transportation.",
+  "authors": [
+    "marshoepial"
+  ],
+  "contact": {},
+
+  "license": "LGPL-3.0",
+  "icon": "assets/ziplines/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.marshoepial.ziplines.client.ZiplinesClient"
+    ],
+    "main": [
+      "com.marshoepial.ziplines.Ziplines"
+    ]
+  },
+
+  "mixins": [
+    "ziplines.mixins.json"
+  ],
+    
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.16.5"
+  }
+}

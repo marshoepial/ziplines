@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "ziplines:block/wrapped_rope" }
+  }
+}
