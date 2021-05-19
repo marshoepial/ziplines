@@ -26,7 +26,10 @@ public class WrappedRopeEntityRenderer extends EntityRenderer<WrappedRopeEntity>
         return new Identifier(Ziplines.MOD_ID, "textures/entity/wrapped_rope.png");
     }
 
-
+    @Override
+    public boolean shouldRender(WrappedRopeEntity entity, Frustum frustum, double x, double y, double z) {
+        return entity.isBeingPulled() || super.shouldRender(entity, frustum, x, y, z);
+    }
 
     @Override
     public void render(WrappedRopeEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
@@ -58,7 +61,7 @@ public class WrappedRopeEntityRenderer extends EntityRenderer<WrappedRopeEntity>
             Entity endingEntity = entity.getEndingEntity();
 
             int blockLightAtStart = getBlockLight(entity, entity.getBlockPos());
-            int skyLightAtStart = entity.world.getLightLevel(LightType.SKY, entity.getBlockPos());
+            int skyLightAtStart = entity.world.getLightLevel(LightType.SKY, entity.getBlockPos().up()); //TODO: get sky light where rope is pointing
             int blockLightAtTarget = entity.world.getLightLevel(LightType.BLOCK, entity.posAtTarget());
             int skyLightAtTarget = entity.world.getLightLevel(LightType.SKY, endingEntity.getBlockPos());
 

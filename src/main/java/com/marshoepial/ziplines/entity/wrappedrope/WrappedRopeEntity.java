@@ -115,11 +115,6 @@ public class WrappedRopeEntity extends AbstractDecorationEntity {
     }
 
     @Override
-    public boolean shouldRender(double distance) {
-        return distance < 1024.0d;
-    }
-
-    @Override
     public Packet<?> createSpawnPacket() {
         return new EntitySpawnS2CPacket(this, EntityRegistrar.WRAPPED_ROPE_ENTITY_TYPE, 0, this.getDecorationBlockPos());
     }
@@ -212,6 +207,40 @@ public class WrappedRopeEntity extends AbstractDecorationEntity {
         }
 
         return null;
+    }
+
+    /**
+     * Checks the distance from the given point to the rope.
+     * This does not use the precise rendering-only methods.
+     * @param point The point at which to check from
+     * @return The distance from the point to the nearest point on the rope. If there is no rope, returns the distance to the entity.
+     */
+    public double distFromRope(Vec3d point) {
+        return point.distanceTo(getClosestPointToRope(point));
+    }
+
+    public Vec3d getClosestPointToRope(Vec3d point) {
+        if (isBeingPulled()) {
+            //https://stackoverflow.com/questions/6068660/checking-a-line-segment-is-within-a-distance-from-a-point
+            Vec3d wiringFrom = getCurrentlyWiring().getPos();
+
+            Vec3d v = wiringFrom.subtract(getPos());
+            Vec3d w = point.subtract(getPos());
+
+            double c1 = w.dotProduct(v);
+            if (c1 <= 0){
+                return getPos();
+            }
+            double c2 = v.dotProduct(v);
+            if (c2 <= c1) {
+                return wiringFrom;
+            }
+
+            return getPos().add(v.multiply(c1 / c2));
+
+        } else {
+            return getPos();
+        }
     }
 
     static {

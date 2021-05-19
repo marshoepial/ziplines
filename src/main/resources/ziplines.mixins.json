@@ -4,8 +4,12 @@
   "package": "com.marshoepial.ziplines.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "ServerChunkManagerMixin",
+    "ThreadedAnvilChunkStorageEntityTrackerMixin",
+    "ThreadedAnvilChunkStorageMixin"
   ],
   "client": [
+    "ClientChunkManagerMixin",
     "ClientPlayNetworkHandlerMixin"
   ],
   "injectors": {
